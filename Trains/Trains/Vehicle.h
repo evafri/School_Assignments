@@ -6,10 +6,15 @@ Date: 2018-05-14
 Version: 1.1
 */
 
+#ifndef VEHICLE_H
+#define VEHICLE_H
+
 #include <iostream>
 #include <string>
 
 using namespace std;
+
+
 
 class Vehicle {
 protected:
@@ -25,3 +30,5 @@ public:
 		os	<< "Vehicle type: " << type << endl;
 	}
 };
+
+#endif
