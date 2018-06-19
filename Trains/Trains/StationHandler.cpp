@@ -11,14 +11,16 @@ Version: 1.1
 #include <iostream>
 #include <string>
 #include "StationHandler.h"
-
+#include "StationDistance.h"
 
 using namespace std;
 
-bool StationHandler::readFromFileHandler(string stationfile)
+bool StationHandler::readFromFileHandler(string stationfile, string trainfile, string trainmapfile)
 {
 	if (readStationsFromFile(stationfile)) {
-		return true;
+		if (readTrainsFromFile(trainfile)) {
+			return readTrainMapFromFile(trainmapfile);
+		}
 	}
 	return false;
 }
@@ -35,13 +37,11 @@ bool StationHandler::readStationsFromFile(string filename)
 		//variables for reading
 		int vehicleId;
 		int vehicleType = 0;
-		string type;
 		int id;
 		string stationName;
 		int nrOfSeats, beds, loadSurface, loadingVolume, maxSpeed, power;
 		double loadCapacity, fuelConsumption;
 		bool internet;
-		string para0, para1;
 
 		//stations.clear();
 		//vehicles.clear();
@@ -105,10 +105,67 @@ bool StationHandler::readStationsFromFile(string filename)
 }
 
 
-void StationHandler::readTrainsFromFile(string filename)
+bool StationHandler::readTrainsFromFile(string filename)
 {
+	ifstream trainFile(filename);
+
+	if (!trainFile.is_open()) {
+		throw runtime_error("Error! Could not open file!");
+	}
+	else {
+		int trainId;
+		int id;
+		int vehicleType = 0;
+		string schedDepTime, schedArrTime;
+		string depStation, arrStation;
+		double maxSpeed;
+
+		vector<string> lines;
+		string line;
+
+		while (getline(trainFile, line))
+		{
+			vector<string>vehicleTypes;
+			lines.push_back(line);
+			istringstream iss(line);
+
+			iss >> trainId >> depStation >> arrStation >> schedDepTime >> schedArrTime >> maxSpeed;
+
+			id = trainId;
+
+			while (iss >> vehicleType) {
+				string type = to_string(vehicleType);
+				vehicleTypes.push_back(type);
+				}
+			trains.emplace_back(shared_ptr<Train>(new Train(id, vehicleTypes, depStation, arrStation, schedDepTime, schedArrTime, maxSpeed)));
+				}
+		return true;
+	}
 }
 
-void StationHandler::readTrainMapFromFile(string filename)
+bool StationHandler::readTrainMapFromFile(string filename)
 {
+	ifstream trainFile(filename);
+
+	if (!trainFile.is_open()) {
+		throw runtime_error("Error! Could not open file!");
+	}
+	else {
+
+		string to;
+		string from;
+		int distance;
+		vector<string> lines;
+		string line;
+
+		while (getline(trainFile, line))
+		{
+			lines.push_back(line);
+			istringstream iss(line);
+			iss >> to >> from >> distance;
+
+			stationDistance.emplace_back(shared_ptr<StationDistance>(new StationDistance(to, from, distance)));
+		}
+		return true;
+	}
 }

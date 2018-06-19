@@ -20,7 +20,6 @@ public:
 		maxSpeedInKm(maxSpeedInKm),powerInKw(powerInKw){}
 	~ElectricalLocomotive(){}
 	void print(ostream &os) {
-		Vehicle::print(os);
 		os << "Max speed (km): " << maxSpeedInKm << endl;
 		os << "Power (kW): " << powerInKw << endl;
 	}

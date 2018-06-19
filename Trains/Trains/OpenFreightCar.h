@@ -21,7 +21,6 @@ public:
 		loadingSurface(loadingSurface){}
 	~OpenFreightCar(){}
 	virtual void print(ostream &os) {
-		Vehicle::print(os);
 		os << "LoadingCapacity: " << loadingCapacity << endl;
 		os << "LoadingSurface: " << loadingSurface << endl;
 	}

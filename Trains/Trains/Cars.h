@@ -6,6 +6,7 @@ Date: 2018-05-14
 Version: 1.1
 */
 
+#pragma once
 #include "Carriage.h"
 #include <iostream>
 

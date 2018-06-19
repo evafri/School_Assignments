@@ -19,7 +19,6 @@ public:
 	SleepingCar(int id, int beds) :Cars(id, "SleepingCar"),beds(beds) {}
 	~SleepingCar(){}
 	void print(ostream &os) {
-		Vehicle::print(os);
 		os << "beds: " << beds << endl;
 	}
 };

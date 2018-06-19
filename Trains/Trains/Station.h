@@ -22,7 +22,7 @@ private:
 	string name;
 	vector <shared_ptr<Vehicle>> vehicles; // vehicles at the station
 	vector <shared_ptr<Train>> trains; // trains ready to leave...
-	vector<string> stations;
+	//vector<string> stations;
 
 public:
 	Station(string name, vector <shared_ptr<Vehicle>> vehicles): name(name), vehicles(vehicles){}
@@ -30,8 +30,8 @@ public:
 
 	
 	void addVehicle(shared_ptr<Vehicle> vehicle) { vehicles.push_back(vehicle); }
-	//shared_ptr<Vehicle> findVehicle(string type); 
-	//bool removeVehicle(Vehicle* vehicle); 
+	//shared_ptr<Vehicle> findVehicle(shared_ptr<Vehicle> vehicle); 
+	//bool removeVehicle(shared_ptr<Vehicle> vehicle); 
 	int getId() { return id; }
 	string getName() { return name; }
 	void display(){}

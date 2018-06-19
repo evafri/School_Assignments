@@ -9,23 +9,17 @@ Version: 1.1
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Station.h"
+#include "StationHandler.h"
+
 using namespace std;
 
 int main() {
-	string line;
-	//ifstream myfile("Trains.txt");
-	//ifstream myfile("TrainStations.txt");
-	ifstream myfile("TrainMap.txt");
-	if (myfile.is_open())
-	{
-		while (getline(myfile, line))
-		{
-			cout << line << '\n';
-		}
-		myfile.close();
-	}
 
-	else cout << "Unable to open file";
+	StationHandler *stationhandler = new StationHandler();
+	stationhandler->readFromFileHandler("TrainStations.txt", "Trains.txt", "TrainMap.txt");
+
+	delete stationhandler;
 
 	return 0;
 }

@@ -6,6 +6,7 @@ Date: 2018-05-14
 Version: 1.1
 */
 
+#pragma once
 #include "Vehicle.h"
 #include <iostream>
 
@@ -17,6 +18,4 @@ public:
 	Carriage(int id, string type) :Vehicle(id, type) {}
 	~Carriage() {}
 	virtual void print(ostream &os) = 0;
-};
-
 };

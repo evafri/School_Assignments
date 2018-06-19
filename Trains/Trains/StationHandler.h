@@ -15,22 +15,25 @@ Version: 1.1
 #include "OpenFreightCar.h"
 #include "ElectricalLocomotive.h"
 #include "DieselLocomotive.h"
+#include "StationDistance.h"
 
 using namespace std;
 
 class StationHandler {
 
 private:
-	vector <shared_ptr<Vehicle>> vehicles; // vector 
+	vector <shared_ptr<Vehicle>> vehicles;  
 	vector<shared_ptr<Station>> stations;
+	vector <shared_ptr<Train>> trains; 
+	vector <shared_ptr<StationDistance>> stationDistance;
 	// Sim anknytning
 
 public:
 	StationHandler(){}
 	~StationHandler() {}
-	bool readFromFileHandler(string stationfile);
+	bool readFromFileHandler(string stationfile, string trainfile, string trainmapfile);
 	bool readStationsFromFile(string filename);
-	void readTrainsFromFile(string filename);
-	void readTrainMapFromFile(string filename);
+	bool readTrainsFromFile(string filename);
+	bool readTrainMapFromFile(string filename);
 
 };
