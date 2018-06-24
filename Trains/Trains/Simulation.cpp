@@ -25,6 +25,7 @@ void Simulation::run(int startTime, int endTime, int interval, int simulationMod
 		
 		if (currentMinute % interval == 0 && simulationMode != 2) {
 			if (simulationMode == 1) {
+				
 				system("pause");
 			}
 			int currentHH = currentMinute / 60;

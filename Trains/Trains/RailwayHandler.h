@@ -55,4 +55,5 @@ public:
 	void setRunWithDefaultInterval(bool value);
 	string printTime();
 	void pressToContinue();
+	void printTimeTable();
 };

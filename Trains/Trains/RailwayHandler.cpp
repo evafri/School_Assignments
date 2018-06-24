@@ -382,6 +382,7 @@ void RailwayHandler::logToFile()
 	logFile.close();
 }
 
+// Function that prints a train
 void RailwayHandler::printTrain(int trainId)
 {
 	vector<string> types;
@@ -400,6 +401,14 @@ void RailwayHandler::printTrain(int trainId)
 	}
 }
 
+// Function that prints all trains in the train vector.
+void RailwayHandler::printTimeTable() {
+	for (auto train : trains) {
+		cout << "Train number: " << train->getId() << " From: " << train->getDepStation() << " at " << train->getSchedDepTime() << " to " << train->getArrStation() << " at " << train->getSchedArrTime() << endl;
+	}
+}
+
+// Function that prints station information
 void RailwayHandler::printStation(string name)
 {
 	for (auto station : stations) {
@@ -440,6 +449,7 @@ void RailwayHandler::printStation(string name)
 	}
 }
 
+// Function used in the menu
 void RailwayHandler::pressToContinue()
 {
 	cout << "Press a key to continue! " << endl;

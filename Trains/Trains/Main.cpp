@@ -139,6 +139,7 @@ int main() {
 		}
 		case '4':
 		{
+			railwayHandler->printTimeTable();				// Prints all train in train vector
 			break;
 		}
 		case '5':
