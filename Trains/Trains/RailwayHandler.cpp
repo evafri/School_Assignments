@@ -221,7 +221,6 @@ bool RailwayHandler::build(int trainId)
 							cout << "Train number: " << trainId << " has been assembled at station  " << train->getDepStation() << endl;
 						}
 						else {
-							//cout << "Time " << sim->getTime() << ": Train number: " << trainId << " has been assembled at station  " << train->getDepStation() << endl;
 							cout << printTime() << " Train number: " << trainId << " has been assembled at station " << train->getDepStation() << endl;
 						}
 						assembledTrains.emplace_back(train);
@@ -235,7 +234,6 @@ bool RailwayHandler::build(int trainId)
 							cout << "Train number: " << trainId << " couldn't be assembled at station " << train->getDepStation() << endl;
 						}
 						else {
-							//cout << "Time " << sim->getTime() << ": Train number: " << trainId << " couldn't be assembled at station  " << train->getDepStation() << endl;
 							cout << printTime() << " Train number: " << trainId << " couldn't be assembled at station " << train->getDepStation() << endl;
 						}
 						incompleteTrains.emplace_back(train);
@@ -263,18 +261,25 @@ string RailwayHandler::printTime() {
 }
 
 // Function that set the train state to ready
-void RailwayHandler::assembled(int trainId)
+int RailwayHandler::assembled(int trainId)
 {
 	for (auto train : assembledTrains) {
 		if (trainId == train->getId()) {
+			int depTime = 0;
+			int hh, mm;
+			char delim;
+			istringstream iss;
+			iss.str(train->getSchedDepTime());
+			iss >> hh >> delim >> mm;
+			depTime = (hh * 60 + mm);
 			train->setState(READY);
 			if (!runWithDefaultInterval) {
 				cout << "Train number: " << trainId << " is ready for departure at station " << train->getDepStation() << endl;
 			}
 			else {
-				//cout << "Time " << sim->getTime() << ": Train number: " << trainId << " is ready for departure at station " << train->getDepStation() << endl;
 				cout << printTime() << " Train number: " << trainId << " is ready for departure at station " << train->getDepStation() << endl;
 			}
+			return depTime;
 		}
 	}
 }
@@ -297,7 +302,6 @@ int RailwayHandler::isRunning(int trainId)
 				cout << "Train number: " << trainId << " just departed from station " << train->getDepStation() << endl;
 			}
 			else {
-				//cout << "Time " << sim->getTime() << ": Train number: " << trainId << " just departed from station " << train->getDepStation() << endl;
 				cout << printTime() << " Train number: " << trainId << " just departed from station " << train->getDepStation() << endl;
 			}
 			return arrivalTime;
@@ -315,7 +319,6 @@ void RailwayHandler::arrived(int trainId)
 				cout << "Train number " << trainId << " just arrived at station " << train->getArrStation() << endl;
 			}
 			else {
-				//cout << "Time " << sim->getTime() << ": Train number " << trainId << " just arrived at station " << train->getArrStation() << endl;
 				cout << printTime() << " Train number " << trainId << " just arrived at station " << train->getArrStation() << endl;
 			}
 		}
@@ -342,7 +345,6 @@ void RailwayHandler::end(int trainId)
 						cout << "Train number " << trainId << " has returned its vehicle at station " << train->getArrStation() << endl;
 					}
 					else {
-						//cout << "Time " << sim->getTime() << ": Train number " << trainId << " has returned its vehicle at station " << train->getArrStation() << endl;
 						cout << printTime() << " Train number " << trainId << " has returned its vehicle at station " << train->getArrStation() << endl;
 					}
 				}

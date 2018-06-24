@@ -44,7 +44,7 @@ public:
 	bool readTrainMapFromFile(string filename);
 	void startEvents();
 	bool build(int trainId);
-	void assembled(int trainId);
+	int assembled(int trainId);
 	int isRunning(int trainId);
 	void arrived(int trainId);
 	void end(int trainId);
