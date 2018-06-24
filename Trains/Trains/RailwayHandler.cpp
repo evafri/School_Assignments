@@ -218,9 +218,11 @@ bool RailwayHandler::build(int trainId)
 					{
 						train->setState(ASSEMBLED);				// train state is set to assembled and saved in vector
 						if (!runWithDefaultInterval) {
+							logToFile("Train number: " + to_string(trainId) + " has been assembled at station  " + train->getDepStation() + "\n");
 							cout << "Train number: " << trainId << " has been assembled at station  " << train->getDepStation() << endl;
 						}
 						else {
+							logToFile(printTime() + "Train number: " + to_string(trainId) + " has been assembled at station  " + train->getDepStation() + "\n");
 							cout << printTime() << " Train number: " << trainId << " has been assembled at station " << train->getDepStation() << endl;
 						}
 						assembledTrains.emplace_back(train);
@@ -231,9 +233,11 @@ bool RailwayHandler::build(int trainId)
 						train->setState(INCOMPLETE);			// train state is set to incomplete and saved in vector
 						
 						if (!runWithDefaultInterval) {
+							logToFile("Train number: " + to_string(trainId) + " couldn't be assembled at station " + train->getDepStation() + "\n");
 							cout << "Train number: " << trainId << " couldn't be assembled at station " << train->getDepStation() << endl;
 						}
 						else {
+							logToFile(printTime() + "Train number: " + to_string(trainId) + " couldn't be assembled at station " + train->getDepStation() + "\n");
 							cout << printTime() << " Train number: " << trainId << " couldn't be assembled at station " << train->getDepStation() << endl;
 						}
 						incompleteTrains.emplace_back(train);
@@ -274,9 +278,11 @@ int RailwayHandler::assembled(int trainId)
 			depTime = (hh * 60 + mm);
 			train->setState(READY);
 			if (!runWithDefaultInterval) {
+				logToFile("Train number: " + to_string(trainId) + " is ready for departure at station " + train->getDepStation() + "\n");
 				cout << "Train number: " << trainId << " is ready for departure at station " << train->getDepStation() << endl;
 			}
 			else {
+				logToFile(printTime() + "Train number: " + to_string(trainId) + " is ready for departure at station " + train->getDepStation() + "\n");
 				cout << printTime() << " Train number: " << trainId << " is ready for departure at station " << train->getDepStation() << endl;
 			}
 			return depTime;
@@ -299,9 +305,11 @@ int RailwayHandler::isRunning(int trainId)
 			arrivalTime = (hh * 60 + mm);
 			train->setState(RUNNING);
 			if (!runWithDefaultInterval) {
+				logToFile("Train number: " + to_string(trainId) + " just departed from station " + train->getDepStation() + "\n");
 				cout << "Train number: " << trainId << " just departed from station " << train->getDepStation() << endl;
 			}
 			else {
+				logToFile(printTime() + "Train number: " + to_string(trainId) + " just departed from station " + train->getDepStation() + "\n");
 				cout << printTime() << " Train number: " << trainId << " just departed from station " << train->getDepStation() << endl;
 			}
 			return arrivalTime;
@@ -316,9 +324,11 @@ void RailwayHandler::arrived(int trainId)
 		if (trainId == train->getId()) {
 			train->setState(ARRIVED);
 			if (!runWithDefaultInterval) {
+				logToFile("Train number " + to_string(trainId) + " just arrived at station " + train->getArrStation() + "\n");
 				cout << "Train number " << trainId << " just arrived at station " << train->getArrStation() << endl;
 			}
 			else {
+				logToFile(printTime() + "Train number " + to_string(trainId) + " just arrived at station " + train->getArrStation() + "\n");
 				cout << printTime() << " Train number " << trainId << " just arrived at station " << train->getArrStation() << endl;
 			}
 		}
@@ -342,9 +352,11 @@ void RailwayHandler::end(int trainId)
 					}
 					train->setState(FINISHED);
 					if (!runWithDefaultInterval) {
+						logToFile("Train number " + to_string(trainId) + " has returned its vehicle at station " + train->getArrStation() + "\n");
 						cout << "Train number " << trainId << " has returned its vehicle at station " << train->getArrStation() << endl;
 					}
 					else {
+						logToFile(printTime() + "Train number " + to_string(trainId) + " has returned its vehicle at station " + train->getArrStation() + "\n");
 						cout << printTime() << " Train number " << trainId << " has returned its vehicle at station " << train->getArrStation() << endl;
 					}
 				}
@@ -375,10 +387,11 @@ double RailwayHandler::calculateAverageSpeed(int trainId)
 	}
 }
 
-void RailwayHandler::logToFile()
+void RailwayHandler::logToFile(string logEntry)
 {
 	ofstream logFile("Trainsim.log", ios_base::out | ios_base::app);
 	//logFile << sim->getTime() << ":" << "Train with id: " << this-> << ":" << << ":" << "\n";
+	logFile << logEntry;
 	logFile.close();
 }
 

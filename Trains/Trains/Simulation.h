@@ -30,6 +30,7 @@ public:
 	int getTime() const { return currentTime; }
 
 	void run(int startTime, int endTime, int interval, int simulationMode);
+	void logToFile(string logEntry);
 
 private:
 	int currentTime; // Time for last processed event
@@ -38,7 +39,7 @@ private:
 					 for the events. The event with the 'smallest' time is always
 					 placed first in queue and will be processed next. */
 
-	//priority_queue<Event*, vector<Event*>, EventComparison> eventQueue;
+					 //priority_queue<Event*, vector<Event*>, EventComparison> eventQueue;
 	priority_queue<shared_ptr<Event>, vector<shared_ptr<Event>>, EventComparison> eventQueue;
 };
 

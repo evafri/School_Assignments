@@ -49,7 +49,7 @@ public:
 	void arrived(int trainId);
 	void end(int trainId);
 	double calculateAverageSpeed(int trainId);
-	void logToFile();
+	void logToFile(string logEntry);
 	void printTrain(int trainId);
 	void printStation(string name);
 	void setRunWithDefaultInterval(bool value);

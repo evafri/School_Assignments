@@ -7,6 +7,7 @@ Date: 2018-06-11
 Version: 1.1
 */
 
+#include <fstream>
 #include "Simulation.h"
 #include "Event.h"
 #include <algorithm>
@@ -21,9 +22,6 @@ using namespace std;
 void Simulation::run(int startTime, int endTime, int interval, int simulationMode)
 {
 	bool keepOn = true;
-
-
-
 	int currentMinute = startTime;
 	while (keepOn) {
 		keepOn = currentMinute < endTime;
@@ -42,6 +40,8 @@ void Simulation::run(int startTime, int endTime, int interval, int simulationMod
 			if (currentMM < 10) {
 				currentMmFormat = "0";
 			}
+			string logEntry = currentHhFormat + to_string(currentHH) + ":" + currentMmFormat + to_string(currentMM) + "\n";
+			logToFile(logEntry);
 			cout << currentHhFormat << currentHH << ":" << currentMmFormat << currentMM << endl;
 		}
 		shared_ptr<Event> nextEvent = eventQueue.top();
@@ -55,9 +55,6 @@ void Simulation::run(int startTime, int endTime, int interval, int simulationMod
 				int currentEventTime = nextEvent->getTime(); // Is it time to handle event?
 				if (currentEventTime == currentMinute) {
 					eventQueue.pop();
-					if (!keepOn) {
-						int i = 0;
-					}
 					nextEvent->processEvent(keepOn);
 				}
 				else {
@@ -79,4 +76,11 @@ void Simulation::run(int startTime, int endTime, int interval, int simulationMod
 
 void Simulation::scheduleEvent(shared_ptr<Event> newEvent) {
 	eventQueue.emplace(newEvent);
+}
+
+void Simulation::logToFile(string logEntry)
+{
+	ofstream logFile("Trainsim.log", ios_base::out | ios_base::app);
+	logFile << logEntry;
+	logFile.close();
 }
