@@ -33,7 +33,7 @@ int main() {
 	bool keepOn = true;
 	bool queueHasEvents = true;
 	railwayHandler->startEvents();
-	
+
 	do
 	{
 		cout << endl << " ***** MENU *****" << endl;
@@ -99,7 +99,7 @@ int main() {
 			railwayHandler->setRunWithDefaultInterval(true);
 			cin.get();
 			railwayHandler->pressToContinue();
-			sim->run(newStartTime, newEndTime, TIME_INTERVAL_DEFAULT);
+			sim->run(newStartTime, newEndTime, TIME_INTERVAL_DEFAULT, -1);
 			break;
 		}
 		case '2':
@@ -114,21 +114,27 @@ int main() {
 			railwayHandler->setRunWithDefaultInterval(newTimeInterval == TIME_INTERVAL_DEFAULT);
 			cin.get();
 			railwayHandler->pressToContinue();
-			sim->run(0, SIM_TIME, newTimeInterval);
+			sim->run(0, SIM_TIME, newTimeInterval, -1);
 			break;
 		}
 		case '3':
-		{ 
-			if (queueHasEvents == true) {
-				//run events löpa till nästa event?
-				keepOn = false;
+		{
+			cin.get();
+			int choice;
+			cout << "Press 0 to step through simulation using 10 minutes interval" << endl;
+			cout << "Press 1 to move simulation to next event" << endl;
+			cin >> choice;
+			cin.get();
+			if (choice < 0 || choice > 1) {
+				cout << "Invalid input" << endl;
+				cout << "Stepping through simulation" << endl;
 			}
-			else {
-				cout << "Run simulation by " << TIME_INTERVAL << " minutes" << endl;
-				sim->run(startTime, endTime, TIME_INTERVAL);
+			if (choice == 0) {
+				sim->run(0, SIM_TIME, TIME_INTERVAL, 1);
 			}
-			// run events or use interval skicka upp 10 min
-			
+			if (choice == 1) {
+				sim->run(0, SIM_TIME, TIME_INTERVAL, 2);
+			}
 			break;
 		}
 		case '4':
@@ -154,7 +160,7 @@ int main() {
 		case '7':
 		{
 			railwayHandler->setRunWithDefaultInterval(true);
-			sim->run(0, SIM_TIME, TIME_INTERVAL_DEFAULT);
+			sim->run(0, SIM_TIME, TIME_INTERVAL_DEFAULT, -1);
 			break;
 		}
 		default: keepOn = false;

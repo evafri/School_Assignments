@@ -19,13 +19,13 @@ void BuildEvent::processEvent()
 
 	if (railwayHandler->build(trainId)) // checks if it is possible to build a train. If train is assembled a new readyevent starts
 	{
-		time += TIME_READY;
+		time += TIME_READY;					// Train is ready to depart
 		e = shared_ptr<Event>(new ReadyEvent(sim, railwayHandler, time, trainId));
 		sim->scheduleEvent(e);
 	}
 	// If a train is delayed...TODO implement functions that handles delay.
 	else {
-		time += TIME_DELAY;
+		time += TIME_DELAY;					// Train is delayed
 		e = shared_ptr<Event>(new BuildEvent(sim, railwayHandler, time, trainId));
 		sim->scheduleEvent(e);
 	}
@@ -38,13 +38,13 @@ void ReadyEvent::processEvent()
 	shared_ptr<Event> e;
 	int depTime;						// variable used for saving a trains schedule depature time
 	depTime = railwayHandler->assembled(trainId);
-	time = depTime;
+	time = depTime;									// Set time to trains departure time
 	e = shared_ptr<Event>(new LeaveEvent(sim, railwayHandler, time, trainId));
 	sim->scheduleEvent(e);
 
 }
 
-// Fuction that creates an arrive event.
+// Fuction that creates an arrive event
 void LeaveEvent::processEvent()
 {
 	shared_ptr<Event> e;
@@ -60,7 +60,7 @@ void ArriveEvent::processEvent()
 {
 	shared_ptr<Event> e;
 	railwayHandler->arrived(trainId);
-	time += TIME_FINISHED;
+	time += TIME_FINISHED;						// Set time to finished
 	e = shared_ptr<Event>(new FinishEvent(sim, railwayHandler, time, trainId));
 	sim->scheduleEvent(e);
 }
