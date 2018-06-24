@@ -24,7 +24,7 @@ public:
 	virtual ~Event() { }
 
 	// Process event by invoking this method
-	virtual void processEvent() = 0;
+	virtual void processEvent(bool keepOn) = 0;
 
 	// Get time for this event
 	unsigned int getTime() const {
@@ -42,9 +42,6 @@ public:
 	bool operator() (shared_ptr<Event> left, shared_ptr<Event> right) {
 		return left.get()->getTime() > right.get()->getTime();
 	}
-	/*bool operator() (Event * left, Event * right) {
-		return left->getTime() > right->getTime();
-	}*/
 };
 
 class BuildEvent : public Event {
@@ -52,7 +49,7 @@ public:
 	BuildEvent(Simulation *sim, RailwayHandler *railwayHandler, int time, int trainId)
 		: Event(time), sim(sim), railwayHandler(railwayHandler), trainId(trainId) { }
 
-	virtual void processEvent();
+	virtual void processEvent(bool keepOn);
 
 protected:
 	int trainId;
@@ -65,7 +62,7 @@ public:
 	ReadyEvent(Simulation *sim, RailwayHandler *railwayHandler, int time, int trainId)
 		: Event(time), sim(sim), railwayHandler(railwayHandler), trainId(trainId) { }
 
-	virtual void processEvent();
+	virtual void processEvent(bool keepOn);
 
 protected:
 	int trainId;
@@ -80,7 +77,7 @@ public:
 	LeaveEvent(Simulation *sim, RailwayHandler *railwayHandler, int time, int trainId)
 		:Event(time), sim(sim), railwayHandler(railwayHandler), trainId(trainId) { }
 
-	virtual void processEvent();
+	virtual void processEvent(bool keepOn);
 
 protected:
 	int trainId;
@@ -95,7 +92,7 @@ public:
 	ArriveEvent(Simulation *sim, RailwayHandler *railwayHandler, int time, int trainId)
 		:Event(time), sim(sim), railwayHandler(railwayHandler), trainId(trainId) { }
 
-	virtual void processEvent();
+	virtual void processEvent(bool keepOn);
 
 protected:
 	int trainId;
@@ -109,7 +106,7 @@ public:
 	FinishEvent(Simulation *sim, RailwayHandler *railwayHandler, int time, int trainId)
 		:Event(time), sim(sim), railwayHandler(railwayHandler), trainId(trainId) { }
 
-	virtual void processEvent();
+	virtual void processEvent(bool keepOn);
 
 protected:
 	int trainId;

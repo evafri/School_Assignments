@@ -20,12 +20,16 @@ using namespace std;
 // Execute events until event queue is empty
 void Simulation::run(int startTime, int endTime, int interval, int simulationMode)
 {
+	bool keepOn = true;
+
+
+
 	int currentMinute = startTime;
-	while (currentMinute <= endTime) {
-		
+	while (keepOn) {
+		keepOn = currentMinute < endTime;
+
 		if (currentMinute % interval == 0 && simulationMode != 2) {
 			if (simulationMode == 1) {
-				
 				system("pause");
 			}
 			int currentHH = currentMinute / 60;
@@ -41,20 +45,31 @@ void Simulation::run(int startTime, int endTime, int interval, int simulationMod
 			cout << currentHhFormat << currentHH << ":" << currentMmFormat << currentMM << endl;
 		}
 		shared_ptr<Event> nextEvent = eventQueue.top();
-		currentTime = nextEvent->getTime(); // do we have any events to run at this moment?
+		currentTime = nextEvent->getTime(); // Do we have any events to run at this moment?
 		if (currentTime == currentMinute) {
 			if (simulationMode == 2) {
 				system("pause");
 			}
 			while (!eventQueue.empty()) {
 				shared_ptr<Event> nextEvent = eventQueue.top();
-				int currentEventTime = nextEvent->getTime(); // is it time to handle event?
+				int currentEventTime = nextEvent->getTime(); // Is it time to handle event?
 				if (currentEventTime == currentMinute) {
 					eventQueue.pop();
-					nextEvent->processEvent();
+					if (!keepOn) {
+						int i = 0;
+					}
+					nextEvent->processEvent(keepOn);
 				}
 				else {
 					break;
+				}
+			}
+			if (!keepOn) { // we need to empty the queue and let every train which is running to arrive at their destination..
+				while (!eventQueue.empty()) {
+					shared_ptr<Event> nextEvent = eventQueue.top();
+					eventQueue.pop();
+					currentTime = nextEvent->getTime();
+					nextEvent->processEvent(keepOn);
 				}
 			}
 		}

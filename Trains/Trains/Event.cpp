@@ -13,50 +13,53 @@ Version: 1.1
 #include <memory>
 
 // Event function that handles the beginning of a trains journey. If a train is assembled it travels into the ready event
-void BuildEvent::processEvent()
+void BuildEvent::processEvent(bool keepOn)
 {
 	shared_ptr<Event> e;
-
-	if (railwayHandler->build(trainId)) // checks if it is possible to build a train. If train is assembled a new readyevent starts
-	{
-		time += TIME_READY;					// Train is ready to depart
-		e = shared_ptr<Event>(new ReadyEvent(sim, railwayHandler, time, trainId));
-		sim->scheduleEvent(e);
+	if (keepOn) {
+		if (railwayHandler->build(trainId)) // checks if it is possible to build a train. If train is assembled a new readyevent starts
+		{
+			time += TIME_READY;					// Train is ready to depart
+			e = shared_ptr<Event>(new ReadyEvent(sim, railwayHandler, time, trainId));
+			sim->scheduleEvent(e);
+		}
+		// If a train is delayed...TODO implement functions that handles delay.
+		else {
+			time += TIME_DELAY;					// Train is delayed
+			e = shared_ptr<Event>(new BuildEvent(sim, railwayHandler, time, trainId));
+			sim->scheduleEvent(e);
+		}
 	}
-	// If a train is delayed...TODO implement functions that handles delay.
-	else {
-		time += TIME_DELAY;					// Train is delayed
-		e = shared_ptr<Event>(new BuildEvent(sim, railwayHandler, time, trainId));
-		sim->scheduleEvent(e);
-	}
-	
 }
 
 // Function that creates a leave event
-void ReadyEvent::processEvent()
+void ReadyEvent::processEvent(bool keepOn)
 {
-	shared_ptr<Event> e;
-	int depTime;						// variable used for saving a trains schedule depature time
-	depTime = railwayHandler->assembled(trainId);
-	time = depTime;									// Set time to trains departure time
-	e = shared_ptr<Event>(new LeaveEvent(sim, railwayHandler, time, trainId));
-	sim->scheduleEvent(e);
-
+	if (keepOn) {
+		shared_ptr<Event> e;
+		int depTime;						// variable used for saving a trains schedule depature time
+		depTime = railwayHandler->assembled(trainId);
+		time = depTime;									// Set time to trains departure time
+		e = shared_ptr<Event>(new LeaveEvent(sim, railwayHandler, time, trainId));
+		sim->scheduleEvent(e);
+	}
 }
 
 // Fuction that creates an arrive event
-void LeaveEvent::processEvent()
+void LeaveEvent::processEvent(bool keepOn)
 {
-	shared_ptr<Event> e;
-	int arrivalTime;						// variable used for saving a trains schedule arrival time
-	arrivalTime	= railwayHandler->isRunning(trainId);
-	time = arrivalTime;						// set time to trains arrival time
-	e = shared_ptr<Event>(new ArriveEvent(sim, railwayHandler, time, trainId));
-	sim->scheduleEvent(e);
+	//if (keepOn) {
+		shared_ptr<Event> e;
+		int arrivalTime;						// variable used for saving a trains schedule arrival time
+		arrivalTime = railwayHandler->isRunning(trainId);
+		time = arrivalTime;						// set time to trains arrival time
+		e = shared_ptr<Event>(new ArriveEvent(sim, railwayHandler, time, trainId));
+		sim->scheduleEvent(e);
+	//}
 }
 
 // Function that creates a finish event
-void ArriveEvent::processEvent()
+void ArriveEvent::processEvent(bool keepOn)
 {
 	shared_ptr<Event> e;
 	railwayHandler->arrived(trainId);
@@ -66,7 +69,7 @@ void ArriveEvent::processEvent()
 }
 
 // Function that calls end function for train in railwayhandler class, and a trains journey ends.
-void FinishEvent::processEvent()
+void FinishEvent::processEvent(bool keepOn)
 {
 	railwayHandler->end(trainId);
 }
