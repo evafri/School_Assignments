@@ -15,6 +15,8 @@ Version: 1.1
 
 using namespace std;
 
+
+
 // Function that returns true if the different files could be read.
 bool RailwayHandler::fileHandler(string stationfile, string trainfile, string trainmapfile)
 {
@@ -219,7 +221,8 @@ bool RailwayHandler::build(int trainId)
 							cout << "Train number: " << trainId << " has been assembled at station  " << train->getDepStation() << endl;
 						}
 						else {
-							cout << "Time " << sim->getTime() << ": Train number: " << trainId << " has been assembled at station  " << train->getDepStation() << endl;
+							//cout << "Time " << sim->getTime() << ": Train number: " << trainId << " has been assembled at station  " << train->getDepStation() << endl;
+							cout << printTime() << " Train number: " << trainId << " has been assembled at station " << train->getDepStation() << endl;
 						}
 						assembledTrains.emplace_back(train);
 						return true;
@@ -229,10 +232,11 @@ bool RailwayHandler::build(int trainId)
 						train->setState(INCOMPLETE);			// train state is set to incomplete and saved in vector
 						
 						if (!runWithDefaultInterval) {
-							cout << "Train number: " << trainId << " couldn't be assembled at station  " << train->getDepStation() << endl;
+							cout << "Train number: " << trainId << " couldn't be assembled at station " << train->getDepStation() << endl;
 						}
 						else {
-							cout << "Time " << sim->getTime() << ": Train number: " << trainId << " couldn't be assembled at station  " << train->getDepStation() << endl;
+							//cout << "Time " << sim->getTime() << ": Train number: " << trainId << " couldn't be assembled at station  " << train->getDepStation() << endl;
+							cout << printTime() << " Train number: " << trainId << " couldn't be assembled at station " << train->getDepStation() << endl;
 						}
 						incompleteTrains.emplace_back(train);
 						return false;
@@ -241,6 +245,21 @@ bool RailwayHandler::build(int trainId)
 			}
 		}
 	}
+}
+
+string RailwayHandler::printTime() {
+	int currentTime = sim->getTime();
+	int currentHH = currentTime / 60;
+	int currentMM = currentTime % 60;
+	string currentHhFormat = "";
+	string currentMmFormat = "";
+	if (currentHH < 10) {
+		currentHhFormat = "0";
+	}
+	if (currentMM < 10) {
+		currentMmFormat = "0";
+	}
+	return "" + currentHhFormat + to_string(currentHH) + ":" + currentMmFormat + to_string(currentMM);
 }
 
 // Function that set the train state to ready
@@ -253,7 +272,8 @@ void RailwayHandler::assembled(int trainId)
 				cout << "Train number: " << trainId << " is ready for departure at station " << train->getDepStation() << endl;
 			}
 			else {
-				cout << "Time " << sim->getTime() << ": Train number: " << trainId << " is ready for departure at station " << train->getDepStation() << endl;
+				//cout << "Time " << sim->getTime() << ": Train number: " << trainId << " is ready for departure at station " << train->getDepStation() << endl;
+				cout << printTime() << " Train number: " << trainId << " is ready for departure at station " << train->getDepStation() << endl;
 			}
 		}
 	}
@@ -277,7 +297,8 @@ int RailwayHandler::isRunning(int trainId)
 				cout << "Train number: " << trainId << " just departed from station " << train->getDepStation() << endl;
 			}
 			else {
-				cout << "Time " << sim->getTime() << ": Train number: " << trainId << " just departed from station " << train->getDepStation() << endl;
+				//cout << "Time " << sim->getTime() << ": Train number: " << trainId << " just departed from station " << train->getDepStation() << endl;
+				cout << printTime() << " Train number: " << trainId << " just departed from station " << train->getDepStation() << endl;
 			}
 			return arrivalTime;
 		}
@@ -294,7 +315,8 @@ void RailwayHandler::arrived(int trainId)
 				cout << "Train number " << trainId << " just arrived at station " << train->getArrStation() << endl;
 			}
 			else {
-				cout << "Time " << sim->getTime() << ": Train number " << trainId << " just arrived at station " << train->getArrStation() << endl;
+				//cout << "Time " << sim->getTime() << ": Train number " << trainId << " just arrived at station " << train->getArrStation() << endl;
+				cout << printTime() << " Train number " << trainId << " just arrived at station " << train->getArrStation() << endl;
 			}
 		}
 	}
@@ -320,7 +342,8 @@ void RailwayHandler::end(int trainId)
 						cout << "Train number " << trainId << " has returned its vehicle at station " << train->getArrStation() << endl;
 					}
 					else {
-						cout << "Time " << sim->getTime() << ": Train number " << trainId << " has returned its vehicle at station " << train->getArrStation() << endl;
+						//cout << "Time " << sim->getTime() << ": Train number " << trainId << " has returned its vehicle at station " << train->getArrStation() << endl;
+						cout << printTime() << " Train number " << trainId << " has returned its vehicle at station " << train->getArrStation() << endl;
 					}
 				}
 			}
@@ -413,4 +436,10 @@ void RailwayHandler::printStation(string name)
 			}
 		}
 	}
+}
+
+void RailwayHandler::pressToContinue()
+{
+	cout << "Press a key to continue! " << endl;
+	cin.get();
 }

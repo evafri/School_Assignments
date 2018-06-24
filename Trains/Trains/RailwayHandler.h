@@ -34,7 +34,7 @@ private:
 	shared_ptr<Vehicle> vehiclePointer = nullptr;
 	vector<string>vehicleTypes;
 	bool runWithDefaultInterval;
-
+	
 public:
 	RailwayHandler(Simulation *sim) : sim(sim){ }
 	~RailwayHandler() {}
@@ -53,4 +53,6 @@ public:
 	void printTrain(int trainId);
 	void printStation(string name);
 	void setRunWithDefaultInterval(bool value);
+	string printTime();
+	void pressToContinue();
 };

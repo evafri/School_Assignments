@@ -97,6 +97,8 @@ int main() {
 				cout << "Error: Starttime can be after endtime, setting default values." << endl;
 			}
 			railwayHandler->setRunWithDefaultInterval(true);
+			cin.get();
+			railwayHandler->pressToContinue();
 			sim->run(newStartTime, newEndTime, TIME_INTERVAL_DEFAULT);
 			break;
 		}
@@ -110,6 +112,8 @@ int main() {
 				newTimeInterval = TIME_INTERVAL_DEFAULT;
 			}
 			railwayHandler->setRunWithDefaultInterval(newTimeInterval == TIME_INTERVAL_DEFAULT);
+			cin.get();
+			railwayHandler->pressToContinue();
 			sim->run(0, SIM_TIME, newTimeInterval);
 			break;
 		}
@@ -124,7 +128,7 @@ int main() {
 				sim->run(startTime, endTime, TIME_INTERVAL);
 			}
 			// run events or use interval skicka upp 10 min
-
+			
 			break;
 		}
 		case '4':
