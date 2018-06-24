@@ -17,8 +17,8 @@ private:
 	int loadingSurface = 0;
 
 public:
-	OpenFreightCar(int id, int loadCapacity, int loadSurface):FreightCars(id, "OpenFreightCar"),loadingCapacity(loadingCapacity),
-		loadingSurface(loadingSurface){}
+	OpenFreightCar(int id, int loadCapacity, int loadSurface):FreightCars(id, "OpenFreightCar"),loadingCapacity(loadCapacity),
+		loadingSurface(loadSurface){}
 	~OpenFreightCar(){}
 	virtual void print(ostream &os = cout) {
 		Vehicle::print(os);
