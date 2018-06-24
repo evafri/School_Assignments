@@ -120,6 +120,10 @@ int main() {
 			int newTimeInterval;
 			cout << "Enter new Time interval: " << endl;
 			cin >> newTimeInterval;
+			if (newTimeInterval < 1 || newTimeInterval >= SIM_TIME) {
+				cout << "Invalid time interval, setting default value(1): " << endl;
+				newTimeInterval = TIME_INTERVAL_DEFAULT;
+			}
 			sim->run(startTime, endTime, newTimeInterval);
 			break;
 		}
