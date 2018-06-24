@@ -15,14 +15,6 @@ Version: 1.1
 
 using namespace std;
 
-struct myclass
-{
-	bool operator()(shared_ptr<Train> left, shared_ptr<Train> right)
-	{
-		return left.get()->getSchedDepTime() > right.get()->getSchedDepTime();
-	}
-} myobject;
-
 // Function that returns true if the different files could be read.
 bool RailwayHandler::fileHandler(string stationfile, string trainfile, string trainmapfile)
 {
