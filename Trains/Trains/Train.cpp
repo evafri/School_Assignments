@@ -100,15 +100,35 @@ void Train::print(double sum) {
 	else {
 		convertedState = "FINISHED";
 	}
-
 	cout << endl << "Train id: " << id << endl;
 	cout << "State: " << convertedState << endl;
-	cout << "Departure: " << depTime << " from station " << depStation << endl;
-	cout << "Arrival: " << arrTime << " at station " << arrStation << endl;
-	cout << "Average speed: " << sum << endl;
-	//if (isLate) cout << "Running late by " << depTime - schedDepTimeConverted << " minutes" << endl;  // TODO
-
-	cout << "vehicles in train: " << endl << endl;
-	
+	cout << "Departure: " << getSchedDepTime() << " from station " << depStation << endl;
+	cout << "Arrival: " << getSchedArrTime() << " at station " << arrStation << endl;
+	cout << "vehicles in train: " << vehicles.size() << endl << endl;
+	for (auto vehicle : vehicles) {
+		string typeName;
+		if (vehicle.get()->getType() == "0") {
+			typeName = "PassengerCar";
+		}
+		else if (vehicle.get()->getType() == "1")
+		{
+			typeName = "SleepingCar";
+		}
+		else if (vehicle.get()->getType() == "2") {
+			typeName = "OpenFreightCar";
+		}
+		else if (vehicle.get()->getType() == "3")
+		{
+			typeName = "ClosedFreightCar";
+		}
+		else if (vehicle.get()->getType() == "4")
+		{
+			typeName = "electricalLocomotive";
+		}
+		else {
+			typeName = "dieselLocomotive";
+		}
+		cout << "VehicleId: " << vehicle.get()->getId() << ", type: " << typeName << endl;
+	}
 }
 

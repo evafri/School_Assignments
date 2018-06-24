@@ -26,9 +26,6 @@ int main() {
 	int startTime = 0;
 	int endTime = 0;
 
-	//railwayHandler->startEvents();
-	//sim->run();
-
 	char choice;
 	bool keepOn = true;
 	bool queueHasEvents = true;

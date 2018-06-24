@@ -10,20 +10,6 @@ Version: 1.1
 #include <algorithm>
 
 using namespace std;
-/*
-struct isValue
-{
-	//int m_id;
-	string m_type;
-
-	//isValue(int id) : m_id(id) {}
-	isValue(string type) : m_type(type) {}
-
-	bool operator()(shared_ptr<Vehicle> v) const
-	{
-		return (v->getType() == m_type);
-	}
-};*/
 
 // Function that adds a vehicle to the station. Used when a train has arrived, and the different carriages needs to be 
 // returned to the vector of vehicles

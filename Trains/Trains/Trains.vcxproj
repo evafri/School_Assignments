@@ -146,6 +146,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Simulation.cpp" />
+    <ClCompile Include="Station.cpp" />
+    <ClCompile Include="RailwayHandler.cpp" />
+    <ClCompile Include="Train.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Carriage.h" />
+    <ClInclude Include="Cars.h" />
+    <ClInclude Include="ClosedFreightCar.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="DieselLocomotive.h" />
+    <ClInclude Include="ElectricalLocomotive.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="FreightCars.h" />
+    <ClInclude Include="Locomotive.h" />
+    <ClInclude Include="mempool.h" />
+    <ClInclude Include="memstat.hpp" />
+    <ClInclude Include="OpenFreightCar.h" />
+    <ClInclude Include="PassengerCar.h" />
+    <ClInclude Include="Simulation.h" />
+    <ClInclude Include="SleepingCar.h" />
+    <ClInclude Include="Station.h" />
+    <ClInclude Include="StationDistance.h" />
+    <ClInclude Include="RailwayHandler.h" />
+    <ClInclude Include="Train.h" />
+    <ClInclude Include="Vehicle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
