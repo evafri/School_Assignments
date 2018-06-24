@@ -20,7 +20,8 @@ public:
 	OpenFreightCar(int id, double loadCapacity, int loadSurface):FreightCars(id, "OpenFreightCar"),loadingCapacity(loadingCapacity),
 		loadingSurface(loadingSurface){}
 	~OpenFreightCar(){}
-	virtual void print(ostream &os) {
+	virtual void print(ostream &os = cout) {
+		Vehicle::print(os);
 		os << "LoadingCapacity: " << loadingCapacity << endl;
 		os << "LoadingSurface: " << loadingSurface << endl;
 	}

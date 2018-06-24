@@ -6,7 +6,7 @@ Date: 2018-05-14
 Version: 1.1
 */
 
-#pragma once
+
 #include "Locomotive.h"
 #include <iostream>
 
@@ -21,7 +21,8 @@ public:
 	DieselLocomotive(int id, int maxSpeedInKm, double fuelConsumption):Locomotive(id, "dieselLocomotive"),
 		maxSpeedInKm(maxSpeedInKm), fuelConsumption(fuelConsumption) {}
 	~DieselLocomotive(){}
-	void print(ostream &os) {
+	void print(ostream &os = cout) {
+		Vehicle::print(os);
 		os << "Max speed (km): " << maxSpeedInKm << endl;
 		os << "Fuel consumption: " << fuelConsumption << endl;
 	}

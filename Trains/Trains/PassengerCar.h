@@ -19,7 +19,8 @@ private:
 public:
 	PassengerCar(int id, int nrOfSeats, bool internet) :Cars(id, "PassengerCar"),nrOfSeats(nrOfSeats), internet(internet){}
 	~PassengerCar(){}
-	virtual void print(ostream &os) {
+	virtual void print(ostream &os = cout) {
+		Vehicle::print(os);
 		os << "Number of seats: " << nrOfSeats << endl;
 		os << "Internet: " << internet << endl;
 	}

@@ -19,6 +19,7 @@ public:
 	ClosedFreightCar(int id, int loadingVolume) :FreightCars(id, "ClosedFreightCar"),loadingVolume(loadingVolume){}
 	~ClosedFreightCar(){}
 	virtual void print(ostream &os) {
+		Vehicle::print(os);
 		os << "Loading Volume: " << loadingVolume << endl;
 	}
 };

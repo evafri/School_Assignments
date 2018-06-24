@@ -9,7 +9,6 @@ Version: 1.1
 #ifndef STATIONDISTANCE_H
 #define STATIONDISTANCE_H
 
-#pragma once
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -18,7 +17,7 @@ using namespace std;
 
 class StationDistance {
 private:
-	vector <shared_ptr<StationDistance>> stationDistance;
+	
 	string to;
 	string from;
 	int distance;
@@ -26,5 +25,9 @@ private:
 public:
 	StationDistance(string to, string from, int distance) : to(to), from(from), distance(distance) {}
 	~StationDistance(){}
+
+	string getTo() { return to;}
+	string getFrom() { return from; }
+	int getDistance() { return distance; }
 };
 #endif

@@ -19,7 +19,8 @@ public:
 	ElectricalLocomotive(int id, int maxSpeedInKm, int powerInKw):Locomotive(id, "electricalLocomotive"),
 		maxSpeedInKm(maxSpeedInKm),powerInKw(powerInKw){}
 	~ElectricalLocomotive(){}
-	void print(ostream &os) {
+	void print(ostream &os = cout) {
+		Vehicle::print(os);
 		os << "Max speed (km): " << maxSpeedInKm << endl;
 		os << "Power (kW): " << powerInKw << endl;
 	}

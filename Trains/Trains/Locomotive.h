@@ -6,7 +6,9 @@ Date: 2018-05-14
 Version: 1.1
 */
 
-#pragma once
+#ifndef LOCOMOTIVE_H
+#define LOCOMOTIVE_H
+
 #include "Vehicle.h"
 #include <iostream>
 
@@ -16,5 +18,6 @@ class Locomotive : public Vehicle {
 public:
 	Locomotive(int id, string type): Vehicle(id, type){}
 	~Locomotive(){}
-	virtual void print(ostream &os) = 0;
+	virtual void print(ostream &os = cout) = 0;
 };
+#endif

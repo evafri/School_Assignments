@@ -34,7 +34,6 @@ protected:
 	unsigned int time;
 };
 
-
 // Used to compare to Events with respect to time
 class EventComparison {
 public:

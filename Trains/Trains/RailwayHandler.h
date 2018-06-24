@@ -29,13 +29,13 @@ private:
 	vector <shared_ptr<Train>> trains; 
 	vector <shared_ptr<StationDistance>> stationDistance;
 	Simulation *sim;
-
-	shared_ptr<Vehicle> vehiclePointer;
-	shared_ptr<Station> stationPointer;
-	shared_ptr<Train> trainPointer;
+	vector <shared_ptr<Train>> assembledTrains;
+	vector <shared_ptr<Train>> incompleteTrains;
+	shared_ptr<Vehicle> vehiclePointer = nullptr;
+	vector<string>vehicleTypes;
 
 public:
-	RailwayHandler(Simulation *sim) : sim(sim){}
+	RailwayHandler(Simulation *sim) : sim(sim){ }
 	~RailwayHandler() {}
 	bool fileHandler(string stationfile, string trainfile, string trainmapfile);
 	bool readStationsFromFile(string filename);
@@ -51,6 +51,9 @@ public:
 	bool isRunning(int trainId);
 	bool arrived(int trainId);
 	bool end(int trainId);
-
+	double calculateAverageSpeed(int trainId);
 	void logToFile();
+
+	void printTrain(int trainId);
+	void printStation(string name);
 };

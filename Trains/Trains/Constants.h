@@ -18,5 +18,7 @@ const int TIME_DEPARTURE = 10;					// Time train departs 10 min before?
 const int TIME_DELAY = 10;						// If train is not built, delay in 10
 const int TIME_FINISHED = 20;					// After 20 min in arrived..
 
-const string SIM_START = "00:00";
-const string SIM_END = "23:59";
+const int SIM_TIME = 1439; // Duration of simulation
+
+//const string SIM_START = "00:00";
+//const string SIM_END = "23:59";

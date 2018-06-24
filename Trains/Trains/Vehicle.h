@@ -14,8 +14,6 @@ Version: 1.1
 
 using namespace std;
 
-
-
 class Vehicle {
 protected:
 	int id;
@@ -24,8 +22,9 @@ protected:
 public:
 	Vehicle(int id, string type):id(id),type(type){}
 	~Vehicle(){}
+	int getId() { return id; }
 	string getType() { return type; }
-	virtual void print(ostream &os) = 0 {
+	virtual void print(ostream &os = cout) {
 		os << "Vehicle id: " << id << endl;
 		os	<< "Vehicle type: " << type << endl;
 	}

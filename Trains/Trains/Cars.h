@@ -6,7 +6,9 @@ Date: 2018-05-14
 Version: 1.1
 */
 
-#pragma once
+#ifndef CARS_H
+#define CARS_H
+
 #include "Carriage.h"
 #include <iostream>
 
@@ -16,6 +18,8 @@ class Cars : public Carriage {
 public:
 	Cars(int id, string type) :Carriage(id, type) {}
 	~Cars() {}
-	void print(ostream &os) = 0;
+	void print(ostream &os = cout) = 0;
 };
+
+#endif
 

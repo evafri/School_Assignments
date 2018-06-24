@@ -6,14 +6,22 @@ Date: 2018-06-11
 Version: 1.1
 */
 
-# include <fstream>
-# include <sstream>
+#include <fstream>
+#include <sstream>
 #include <iostream>
 #include <string>
 #include "RailwayHandler.h"
 #include "StationDistance.h"
 
 using namespace std;
+
+struct myclass
+{
+	bool operator()(shared_ptr<Train> left, shared_ptr<Train> right)
+	{
+		return left.get()->getSchedDepTime() > right.get()->getSchedDepTime();
+	}
+} myobject;
 
 bool RailwayHandler::fileHandler(string stationfile, string trainfile, string trainmapfile)
 {
@@ -122,7 +130,6 @@ bool RailwayHandler::readTrainsFromFile(string filename)
 
 		while (getline(trainFile, line))
 		{
-			vector<string>vehicleTypes;
 			lines.push_back(line);
 			istringstream iss(line);
 
@@ -170,52 +177,173 @@ bool RailwayHandler::readTrainMapFromFile(string filename)
 void RailwayHandler::startEvents()
 {
 	// starta upp allt 
-	int depTime;
+	char delim;
+
+	//sort(trains.begin(), trains.end(), myobject);
+
 	for (auto train : trains) {
-		//depTime = train->getSchedDepTime() - TIME_BUILD;
-		//sim->scheduleEvent(new BuildEvent(sim, this, depTime, train->getId()));
+		int hh, mm;
+		istringstream iss;
+		iss.str(train->getSchedDepTime());
+		iss >> hh >> delim >> mm;
+		unsigned eventStartTime;
+		eventStartTime = (hh*60+mm) - TIME_BUILD;
+		
+		sim->scheduleEvent(new BuildEvent(sim, this, eventStartTime, train->getId()));
 	}
 }
 
 bool RailwayHandler::build(int trainId)
 {
-	// kolla om tåget är assembled eller incomplete
-	// set state ass eller incomple
-	// add 
-	return false;
+	vector<string> types;
+	bool found = false;
+
+	for (auto train : trains) {
+		if (trainId == train->getId()) {
+			for (auto station : stations) {
+				if (train->getDepStation() == station->getName()) {
+					types = train->getType();
+					for (auto type : types) {
+						if (station->findVehicle(vehiclePointer, type)) {
+							train->addVehiclesToTrain(vehiclePointer);			// måste veta id på vehicle som sökts fram lägga till
+							station->removeVehicleAtStation(vehiclePointer);			// ta bort från stationen
+							found = true;
+						}
+					}
+					if (found)
+					{
+						train->setState(ASSEMBLED);
+						cout << "Time " << sim->getTime() << ": Train number: " << trainId << " has been assembled at station  " << train->getDepStation() << endl;;
+						assembledTrains.emplace_back(train); 
+						return true;
+					}
+					else
+					{
+						train->setState(INCOMPLETE); 
+						cout << "Time " << sim->getTime() << ": Train number: " << trainId << " couldn't be assembled at station  " << train->getDepStation() << endl;
+						incompleteTrains.emplace_back(train); 
+						return false;
+					}
+				}
+			}
+		}
+	}
 }
 
 bool RailwayHandler::assembled(int trainId)
 {
-	// kolla om tåget är redo att åka
-	// set state ready
-	return false;
+	for (auto train : assembledTrains) {				
+		if (trainId == train->getId()) {
+			train->setState(READY);
+
+			cout << endl << "Time " << sim->getTime() << ": Train number: " << trainId << " is ready for departure at station " << train->getDepStation() << endl;
+			
+			return true;
+		}
+	}
 }
 
 bool RailwayHandler::isRunning(int trainId)
 {
-	// kolla tåget är running
-	// set state running
+	for (auto train : assembledTrains) {						
+		if (trainId == train->getId()) {
+			train->setState(RUNNING);
+
+			cout << endl << "Time " << sim->getTime() << ": Train number: " << trainId << " just departed from station " << train->getDepStation() << endl;
+			
+			return true;
+		}
+	}
+
+	
 	// senhantering
 	return false;
 }
 
 bool RailwayHandler::arrived(int trainId)
 {
-	// kolla tåget arrived
-	// set state aarrided
+	for (auto train : assembledTrains) {					
+		if (trainId == train->getId()) {
+			train->setState(ARRIVED);
+
+			cout << endl << "Time " << sim->getTime() << ": Train number " << trainId << " just arrived at station " << train->getArrStation() << endl;
+			
+			return true;
+		}
+	}
+
+	
+	
 	// senhantering
 	return false;
 }
 
 bool RailwayHandler::end(int trainId)
 {
-	// set state finisched
-	// unload vehicles to stations
-	// unload vehicles to station
-	return false;
+	vector<string> types;
+
+	for (auto train : assembledTrains) {						
+		if (trainId == train->getId()) {
+			for (auto station : stations) {
+				if (train->getArrStation() == station->getName()) {
+					types = train->getType();
+					for (auto type : types) {
+						if (station->findVehicle(vehiclePointer, type)) {
+							train->unloadVehiclesFromTrain(vehiclePointer);
+							train->setState(FINISHED);
+
+							cout << endl << "Time " << sim->getTime() << ": Train number " << trainId << "has returned its vehicle at station " << train->getArrStation() << endl;
+
+							return true;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+double RailwayHandler::calculateAverageSpeed(int trainId)
+{
+	double sum = 0;
+	for (auto train : trains) {					
+		if (trainId == train->getId()) {
+			for (auto distance : stationDistance) {
+				if (train->getDepStation() == distance->getFrom() && train->getArrStation() == distance->getTo()) {
+					int d = distance->getDistance();
+					sum = train->calculateAverageSpeed(d);
+					return sum;
+				}
+			}
+		}
+	}
 }
 
 void RailwayHandler::logToFile()
 {
+}
+
+void RailwayHandler::printTrain(int trainId)
+{
+	for (auto train : trains) {
+		if (trainId == train->getId()) {
+			double sum = this->calculateAverageSpeed(trainId);
+			train->print(sum);
+		}
+	}
+	// call print funktion in train + add average speed
+}
+
+void RailwayHandler::printStation(string name)
+{
+	for (auto station : stations) {
+		if (name == station->getName()) {
+			station->print();
+			for (auto train : trains) {
+				if (train->getDepStation() == station->getName() || train->getArrStation() == station->getName()) {
+					cout << "Train: " << train->getId() << " in state: " << train->getState() << " at station: " << station->getName() << endl;
+				}
+			}
+		}
+	}	
 }

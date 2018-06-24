@@ -20,22 +20,22 @@ class Station {
 private:
 	int id;
 	string name;
+	string type;
 	vector <shared_ptr<Vehicle>> vehicles; // vehicles at the station
-	vector <shared_ptr<Train>> trains; // trains ready to leave...
-	//vector<string> stations;
+//	vector <shared_ptr<Train>> trains; // trains ready to leave... needded?
 
 public:
 	Station(string name, vector <shared_ptr<Vehicle>> vehicles): name(name), vehicles(vehicles){}
 	~Station() {}
 
+	void addVehicleToStation(shared_ptr<Vehicle> vehicle); // lägga till vehicles till stationen
+	bool findVehicle(shared_ptr<Vehicle> &vehicle, string type); // söka efter ett vehicle 
 	
-	void addVehicle(shared_ptr<Vehicle> vehicle) { vehicles.push_back(vehicle); }
-	//shared_ptr<Vehicle> findVehicle(shared_ptr<Vehicle> vehicle); 
-	//bool removeVehicle(shared_ptr<Vehicle> vehicle); 
+	bool removeVehicleAtStation(shared_ptr<Vehicle> vehicle); // ta bort ett vehicle från poolvektorn som lagts till
 	int getId() { return id; }
 	string getName() { return name; }
-	void display(){}
-
+	string getType() { return type; }
+	void print();
 };
 
 #endif

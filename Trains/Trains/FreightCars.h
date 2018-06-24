@@ -6,7 +6,9 @@ Date: 2018-05-14
 Version: 1.1
 */
 
-#pragma once
+#ifndef FREIGHTCARS_H
+#define FREIGHTCARS_H
+
 #include "Carriage.h"
 #include <iostream>
 
@@ -16,5 +18,7 @@ class FreightCars : public Carriage {
 public:
 	FreightCars(int id, string type) :Carriage(id, type) {}
 	~FreightCars() {}
-	void print(ostream &os) = 0;
+	void print(ostream &os = cout) = 0;
 };
+
+#endif

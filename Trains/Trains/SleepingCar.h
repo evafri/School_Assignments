@@ -18,7 +18,8 @@ private:
 public:
 	SleepingCar(int id, int beds) :Cars(id, "SleepingCar"),beds(beds) {}
 	~SleepingCar(){}
-	void print(ostream &os) {
+	void print(ostream &os = cout) {
+		Vehicle::print(os);
 		os << "beds: " << beds << endl;
 	}
 };
