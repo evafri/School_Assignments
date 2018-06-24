@@ -26,21 +26,6 @@ int main() {
 	int startTime = 0;
 	int endTime = 0;
 
-
-
-	//int simTime = 0;
-	//while (simTime < SIM_TIME) { // Load events into queue between 00:00 and 23:59		
-	//	
-
-	//	if (simTime >= SIM_TIME) { // Schedule the close down
-	//		//theSim->scheduleEvent(new ClosingEvent(theSim, theBar, SIM_TIME))//;
-	//	}
-	//	else { // Schedule a new arrival
-	//		//gör nåt här
-	//	}	
-	//	simTime++;
-	//}
-
 	//railwayHandler->startEvents();
 	//sim->run();
 
@@ -49,7 +34,6 @@ int main() {
 	bool queueHasEvents = true;
 	railwayHandler->startEvents();
 	
-
 	do
 	{
 		cout << endl << " ***** MENU *****" << endl;
@@ -112,6 +96,7 @@ int main() {
 				newEndTime = endTimeHh * 60 + endTimeMm;
 				cout << "Error: Starttime can be after endtime, setting default values." << endl;
 			}
+			railwayHandler->setRunWithDefaultInterval(true);
 			sim->run(newStartTime, newEndTime, TIME_INTERVAL_DEFAULT);
 			break;
 		}
@@ -124,7 +109,8 @@ int main() {
 				cout << "Invalid time interval, setting default value(1): " << endl;
 				newTimeInterval = TIME_INTERVAL_DEFAULT;
 			}
-			sim->run(startTime, endTime, newTimeInterval);
+			railwayHandler->setRunWithDefaultInterval(newTimeInterval == TIME_INTERVAL_DEFAULT);
+			sim->run(0, SIM_TIME, newTimeInterval);
 			break;
 		}
 		case '3':
@@ -163,7 +149,8 @@ int main() {
 		}
 		case '7':
 		{
-			sim->run(startTime, endTime, TIME_INTERVAL_DEFAULT);
+			railwayHandler->setRunWithDefaultInterval(true);
+			sim->run(0, SIM_TIME, TIME_INTERVAL_DEFAULT);
 			break;
 		}
 		default: keepOn = false;

@@ -29,7 +29,7 @@ public:
 	void scheduleEvent(shared_ptr<Event> newEvent);
 	int getTime() const { return currentTime; }
 
-	void run(int startTime, int endTime, int timestamp);
+	void run(int startTime, int endTime, int interval);
 
 private:
 	int currentTime; // Time for last processed event

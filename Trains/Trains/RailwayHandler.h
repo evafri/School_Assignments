@@ -33,6 +33,7 @@ private:
 	vector <shared_ptr<Train>> incompleteTrains;
 	shared_ptr<Vehicle> vehiclePointer = nullptr;
 	vector<string>vehicleTypes;
+	bool runWithDefaultInterval;
 
 public:
 	RailwayHandler(Simulation *sim) : sim(sim){ }
@@ -51,4 +52,5 @@ public:
 	void logToFile();
 	void printTrain(int trainId);
 	void printStation(string name);
+	void setRunWithDefaultInterval(bool value);
 };
