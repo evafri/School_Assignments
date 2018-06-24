@@ -7,12 +7,13 @@ Version: 1.1
 */
 
 #include <iostream>
-#include <fstream>
 #include <string>
 #include "Station.h"
 #include "Simulation.h"
 #include "RailwayHandler.h"
 #include "memstat.hpp"
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -68,14 +69,49 @@ int main() {
 		{
 		case '1':
 		{
-			//startTime = 0;
-			//endTime = SIM_TIME;
 			int newStartTime = 0;
-			int newEndTime;
-			cout << "Enter start time:" << endl;
-			cin >> newStartTime;
-			cout << "Enter stop time:" << endl;
-			cin >> newEndTime;
+			int newEndTime = 0;
+			string startTime;
+			string endTime;
+			char delim;
+			int startTimeHh = 0;
+			int startTimeMm = 0;
+			int endTimeHh = 0;
+			int endTimeMm = 0;
+
+			cout << "Enter start time [hh:mm]:" << endl;
+			cin >> startTime;
+			cout << "Enter stop time [hh:mm]:" << endl;
+			cin >> endTime;
+
+			istringstream iss;
+			iss.str(startTime);
+			iss >> startTimeHh >> delim >> startTimeMm;
+			if (startTimeHh < 0 || startTimeHh > 23 || startTimeMm < 0 || startTimeMm > 59) {
+				startTimeHh = 0;
+				startTimeMm = 0;
+				cout << "Invalid starttime, setting default starttime." << endl;
+			}
+
+			istringstream iss2;
+			iss2.str(endTime);
+			iss2 >> endTimeHh >> delim >> endTimeMm;
+			if (endTimeHh < 0 || endTimeHh > 23 || endTimeMm < 0 || endTimeMm > 59) {
+				endTimeHh = 23;
+				endTimeMm = 59;
+				cout << "Invalid endtime, setting default starttime." << endl;
+			}
+
+			newStartTime = startTimeHh * 60 + startTimeMm;
+			newEndTime = endTimeHh * 60 + endTimeMm;
+
+			if (newStartTime >= newEndTime) {
+				newStartTime = 0;
+				endTimeHh = 23;
+				endTimeMm = 59;
+				newEndTime = endTimeHh * 60 + endTimeMm;
+				cout << "Error: Starttime can be after endtime, setting default values." << endl;
+			}
 			sim->run(newStartTime, newEndTime, TIME_INTERVAL_DEFAULT);
 			break;
 		}
