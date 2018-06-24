@@ -27,7 +27,7 @@ bool Train::unloadVehiclesFromTrain(shared_ptr<Vehicle> vehicle)
 	}
 	else {
 		train.erase(item);
-		sp->addVehicleToStation(vehicle);
+		//sp->addVehicleToStation(vehicle);
 		return true;
 	}
 	return false;
@@ -77,7 +77,7 @@ void Train::print(double sum) {
 	cout << "Departure: " << depTime << " from station " << depStation << endl;
 	cout << "Arrival: " << arrTime << " at station " << arrStation << endl;
 	cout << "Average speed: " << sum << endl;
-	if (isLate) cout << "Running late by " << depTime - schedDepTimeConverted << " minutes" << endl;
+	//if (isLate) cout << "Running late by " << depTime - schedDepTimeConverted << " minutes" << endl;
 
 	cout << "vehicles in train: " << endl << endl;
 

@@ -41,19 +41,14 @@ public:
 	bool readStationsFromFile(string filename);
 	bool readTrainsFromFile(string filename);
 	bool readTrainMapFromFile(string filename);
-
-	// funktion som startar upp event mm samt anropar add remove find i station/train
-	// söker efter ett tåg id i trains skickar med, ska bygga ex 1
-
 	void startEvents();
 	bool build(int trainId);
-	bool assembled(int trainId);
-	bool isRunning(int trainId);
-	bool arrived(int trainId);
-	bool end(int trainId);
+	void assembled(int trainId);
+	int isRunning(int trainId);
+	void arrived(int trainId);
+	void end(int trainId);
 	double calculateAverageSpeed(int trainId);
 	void logToFile();
-
 	void printTrain(int trainId);
 	void printStation(string name);
 };

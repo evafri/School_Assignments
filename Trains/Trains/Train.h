@@ -62,7 +62,6 @@ public:
 	void setState(State iState) { state = iState; }
 	void setIslate(bool late) { isLate = late; }
 	void setDelay(int time);
-	
 	vector<string> getType() { return vehicleTypes; }
 	double getMaxSpeed() { return maxSpeed; }
 	double calculateAverageSpeed(int distance);
