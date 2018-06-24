@@ -18,7 +18,7 @@ class Cars : public Carriage {
 public:
 	Cars(int id, string type) :Carriage(id, type) {}
 	~Cars() {}
-	void print(ostream &os = cout) = 0;
+	void print(ostream &os = cout) {}
 };
 
 #endif

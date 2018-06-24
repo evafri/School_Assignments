@@ -1,6 +1,6 @@
 /*
 File: StationDistance.h
-Purpose: Holds information about the distance between two stations
+Purpose: Holds information about the distance between two stations. Gets values from trainmap.txt
 Author: Eva Frisell <evmo1600>
 Date: 2018-06-11
 Version: 1.1

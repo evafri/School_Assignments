@@ -10,7 +10,7 @@ Version: 1.1
 #include <algorithm>
 
 using namespace std;
-
+/*
 struct isValue
 {
 	//int m_id;
@@ -23,13 +23,16 @@ struct isValue
 	{
 		return (v->getType() == m_type);
 	}
-};
+};*/
 
+// Function that adds a vehicle to the station. Used when a train has arrived, and the different carriages needs to be 
+// returned to the vector of vehicles
 void Station::addVehicleToStation(shared_ptr<Vehicle> vehicle)
 {
 		vehicles.emplace_back(vehicle);	
 }
 
+// Function used for finding a vehicle in the vehicles vector. 
 bool Station::findVehicle(shared_ptr<Vehicle> &vehicle, string type)
 {
 	string typeName;
@@ -56,15 +59,6 @@ bool Station::findVehicle(shared_ptr<Vehicle> &vehicle, string type)
 		typeName = "dieselLocomotive";
 	}
 
-	
-	/*
-	if (std::find_if(vehicles.begin(), vehicles.end(), isValue(type)) != vehicles.end())
-	{
-		return true;
-	}
-	else {
-		return false;
-	}*/
 	auto it = find_if(vehicles.begin(), vehicles.end(), [&typeName](const shared_ptr<Vehicle> &v) {return v->getType() == typeName; });
 	if (it != vehicles.end())
 	{
@@ -74,7 +68,7 @@ bool Station::findVehicle(shared_ptr<Vehicle> &vehicle, string type)
 	return false;
 }
 
-
+// Function uses for removing a vehicle from the vector of vehicles
 bool Station::removeVehicleAtStation(shared_ptr<Vehicle> vehicle)
 {
 	auto item = std::find(vehicles.begin(), vehicles.end(), vehicle);
@@ -88,6 +82,7 @@ bool Station::removeVehicleAtStation(shared_ptr<Vehicle> vehicle)
 	}
 }
 
+// Function for printing
 void Station::print()
 {
 	cout << endl << "Station name: " << name << endl;

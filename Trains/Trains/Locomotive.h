@@ -18,6 +18,6 @@ class Locomotive : public Vehicle {
 public:
 	Locomotive(int id, string type): Vehicle(id, type){}
 	~Locomotive(){}
-	virtual void print(ostream &os = cout) = 0;
+	virtual void print(ostream &os = cout) {}
 };
 #endif

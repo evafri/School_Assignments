@@ -9,6 +9,8 @@ Version: 1.1
 
 #ifndef EVENT_H
 #define EVENT_H
+#include <memory>
+using namespace std;
 
 // Forward declarations
 class Simulation;
@@ -37,9 +39,12 @@ protected:
 // Used to compare to Events with respect to time
 class EventComparison {
 public:
-	bool operator() (Event * left, Event * right) {
-		return left->getTime() > right->getTime();
+	bool operator() (shared_ptr<Event> left, shared_ptr<Event> right) {
+		return left.get()->getTime() > right.get()->getTime();
 	}
+	/*bool operator() (Event * left, Event * right) {
+		return left->getTime() > right->getTime();
+	}*/
 };
 
 class BuildEvent : public Event {
@@ -55,9 +60,9 @@ protected:
 	RailwayHandler *railwayHandler;
 };
 
-class readyEvent : public Event {
+class ReadyEvent : public Event {
 public:
-	readyEvent(Simulation *sim, RailwayHandler *railwayHandler, int time, int trainId)
+	ReadyEvent(Simulation *sim, RailwayHandler *railwayHandler, int time, int trainId)
 		: Event(time), sim(sim), railwayHandler(railwayHandler), trainId(trainId) { }
 
 	virtual void processEvent();

@@ -13,11 +13,11 @@ using namespace std;
 
 class OpenFreightCar : public FreightCars {
 private:
-	double loadingCapacity;
-	int loadingSurface;
+	int loadingCapacity = 0;
+	int loadingSurface = 0;
 
 public:
-	OpenFreightCar(int id, double loadCapacity, int loadSurface):FreightCars(id, "OpenFreightCar"),loadingCapacity(loadingCapacity),
+	OpenFreightCar(int id, int loadCapacity, int loadSurface):FreightCars(id, "OpenFreightCar"),loadingCapacity(loadingCapacity),
 		loadingSurface(loadingSurface){}
 	~OpenFreightCar(){}
 	virtual void print(ostream &os = cout) {

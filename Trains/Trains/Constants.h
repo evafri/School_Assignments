@@ -11,6 +11,7 @@ enum State {NOT_ASSEMBLED, INCOMPLETE, ASSEMBLED, READY, RUNNING, ARRIVED, FINIS
 
 // Time variables used in simulation
 
+const int TIME_INTERVAL_DEFAULT = 1;
 const int TIME_INTERVAL = 10;					// time interval for user
 const int TIME_BUILD = 30;						// train build is 30 min before dep time
 const int TIME_READY = 20;						// 10 min before take-off or from 20 to 10 min interval?

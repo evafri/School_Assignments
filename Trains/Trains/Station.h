@@ -21,17 +21,17 @@ private:
 	int id;
 	string name;
 	string type;
-	vector <shared_ptr<Vehicle>> vehicles; // vehicles at the station
-//	vector <shared_ptr<Train>> trains; // trains ready to leave... needded?
+	vector <shared_ptr<Vehicle>> vehicles; // vehicles at the station that holds all the different vehicles
+//	vector <shared_ptr<Train>> trains; // trains ready to leave... needed?
 
 public:
 	Station(string name, vector <shared_ptr<Vehicle>> vehicles): name(name), vehicles(vehicles){}
 	~Station() {}
 
-	void addVehicleToStation(shared_ptr<Vehicle> vehicle); // lägga till vehicles till stationen
-	bool findVehicle(shared_ptr<Vehicle> &vehicle, string type); // söka efter ett vehicle 
+	void addVehicleToStation(shared_ptr<Vehicle> vehicle); 
+	bool findVehicle(shared_ptr<Vehicle> &vehicle, string type); 
 	
-	bool removeVehicleAtStation(shared_ptr<Vehicle> vehicle); // ta bort ett vehicle från poolvektorn som lagts till
+	bool removeVehicleAtStation(shared_ptr<Vehicle> vehicle); 
 	int getId() { return id; }
 	string getName() { return name; }
 	string getType() { return type; }

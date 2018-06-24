@@ -11,15 +11,16 @@ Version: 1.1
 #include <sstream>
 #include <iostream>
 
+// Function that adds a vehicle to the train
 void Train::addVehiclesToTrain(shared_ptr<Vehicle> vehicle)
 {
 	//add to train
 	train.emplace_back(vehicle);
 }
 
+// Function that removes a vehicle from the train
 bool Train::unloadVehiclesFromTrain(shared_ptr<Vehicle> vehicle)
 {
-	shared_ptr<Station> sp;
 	auto item = std::find(train.begin(), train.end(), vehicle);
 
 	if (item == train.end()) {
@@ -27,20 +28,22 @@ bool Train::unloadVehiclesFromTrain(shared_ptr<Vehicle> vehicle)
 	}
 	else {
 		train.erase(item);
-		//sp->addVehicleToStation(vehicle);
 		return true;
 	}
 	return false;
 }
 
+// Function that sets delay. TO DO implement delay functions.
 void Train::setDelay(int time)
 {
 	arrTime += time;
 	depTime += time;
 }
 
+// Function that calculates a trains average speed. TO DO handle delays.
 double Train::calculateAverageSpeed(int distance)
 {
+	// Convert string into int for calculation
 	istringstream iss;
 	int hh, mm;
 	char delim;
@@ -55,14 +58,15 @@ double Train::calculateAverageSpeed(int distance)
 	iss >> hh >> delim >> mm;
 	schedArrTimeConverted = (hh * 60 + mm);
 
-	// get distance ett tågs från station == från 
 	double sum = 0;
 	sum = distance / (schedArrTimeConverted - schedDepTimeConverted / 60);
 	return sum;
 }
 
+// Function that prints 
 void Train::print(double sum) {
 
+	// convert string to int for calculation
 	istringstream iss;
 	int hh, mm;
 	char delim;
@@ -72,21 +76,39 @@ void Train::print(double sum) {
 	iss >> hh >> delim >> mm;
 	schedDepTimeConverted = (hh * 60 + mm);
 
+	int state = this->getState();
+	string convertedState = "";
+
+	if (state == 0) {
+		convertedState = "NOT_ASSEMBLED";
+	}
+	else if (state == 1) {
+		convertedState = "INCOMPLETE";
+	}
+	else if (state == 2) {
+		convertedState = "ASSEMBLED";
+	}
+	else if (state == 3) {
+		convertedState = "READY";
+	}
+	else if (state == 4) {
+		convertedState = "RUNNING";
+	}
+	else if (state == 5) {
+		convertedState = "ARRIVED";
+	}
+	else {
+		convertedState = "FINISHED";
+	}
+
 	cout << endl << "Train id: " << id << endl;
-	cout << "State: " << state << endl;
+	cout << "State: " << convertedState << endl;
 	cout << "Departure: " << depTime << " from station " << depStation << endl;
 	cout << "Arrival: " << arrTime << " at station " << arrStation << endl;
 	cout << "Average speed: " << sum << endl;
-	//if (isLate) cout << "Running late by " << depTime - schedDepTimeConverted << " minutes" << endl;
+	//if (isLate) cout << "Running late by " << depTime - schedDepTimeConverted << " minutes" << endl;  // TODO
 
 	cout << "vehicles in train: " << endl << endl;
-
-	//print all vehicles in train or vehicle or vehicletype?
 	
-	for (auto t : train) {
-
-			t->print();
-		
-	}
 }
 
